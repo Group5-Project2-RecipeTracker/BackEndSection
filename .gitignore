@@ -243,3 +243,7 @@ $RECYCLE.BIN/
 *serviceAccount*.json
 firebase-service-account.json
 meal-tracker-firebase.json
+
+secret/
+*.json
+*adminsdk*.json
