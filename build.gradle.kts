@@ -24,6 +24,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// Google OAuth2
+	implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.google.firebase:firebase-admin:9.2.0")
 }
 
 tasks.withType<Test> {

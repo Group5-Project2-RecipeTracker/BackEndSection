@@ -286,4 +286,10 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 >>>>>>> 5a9f8d8 (Initial Spring Boot setup)
+=======
+
+### Firebase ###
+src/main/resources/firebase-service-account.json
+>>>>>>> e68dad7 (OAuth iteration one)
