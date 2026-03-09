@@ -1,6 +1,10 @@
 # -------------------------
 # Build outputs
 # -------------------------
+# Firebase service accounts
+firebase-service-account.json
+*serviceAccount*.json
+*.firebase.json
 
 # Maven
 target/
