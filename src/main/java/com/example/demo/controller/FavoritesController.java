@@ -1,34 +1,32 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.Map;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/favorites")
 public class FavoritesController {
 
-    @GetMapping
-    public Map<String, Object> listFavorites() {
-        return Map.of(
-                "message", "placeholder: list favorites",
-                "items", List.of()
-        );
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    public String listFavorites() {
+        return """
+            <h2>Favorites (placeholder)</h2>
+            <ul>
+              <li>1 - Chicken Bowl</li>
+              <li>2 - Oatmeal</li>
+            </ul>
+        """;
     }
 
-    @PostMapping("/{foodId}")
-    public Map<String, Object> addFavorite(@PathVariable String foodId) {
-        return Map.of(
-                "message", "placeholder: add favorite",
-                "foodId", foodId
-        );
+    @PostMapping("/{id}")
+    public Map<String, Object> addFavorite(@PathVariable int id) {
+        return Map.of("message", "placeholder: add favorite", "id", id);
     }
 
-    @DeleteMapping("/{foodId}")
-    public Map<String, Object> removeFavorite(@PathVariable String foodId) {
-        return Map.of(
-                "message", "placeholder: remove favorite",
-                "foodId", foodId
-        );
+    @DeleteMapping("/{id}")
+    public Map<String, Object> removeFavorite(@PathVariable int id) {
+        return Map.of("message", "placeholder: remove favorite", "id", id);
     }
 }

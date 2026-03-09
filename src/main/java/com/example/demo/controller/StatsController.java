@@ -1,23 +1,21 @@
 package com.example.demo.controller;
 
-import java.util.Map;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/stats")
 public class StatsController {
 
-    @GetMapping
-    public Map<String, Object> getStats() {
-        return Map.of(
-                "message", "placeholder: user stats",
-                "totals", Map.of(
-                        "mealsLogged", 0,
-                        "recipesSaved", 0,
-                        "favorites", 0
-                )
-        );
+    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+    public String stats() {
+        return """
+            <h2>Stats (placeholder)</h2>
+            <ul>
+              <li>mealsLogged: 15</li>
+              <li>recipesSaved: 8</li>
+              <li>favorites: 5</li>
+            </ul>
+        """;
     }
 }
