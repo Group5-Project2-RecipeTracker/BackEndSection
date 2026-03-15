@@ -28,6 +28,9 @@ dependencies {
 	// Google OAuth2
 	implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.google.firebase:firebase-admin:9.2.0")
+
+	//test
+	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<Test> {
