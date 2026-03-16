@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: recipe-tracker-api:latest
+    container_name: recipe-tracker-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./secret/firebase-service-account.json:/app/secret/firebase-service-account.json:ro
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
