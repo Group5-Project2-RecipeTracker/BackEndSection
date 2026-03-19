@@ -1,7 +1,8 @@
 package com.example.demo;
-import com.example.demo.controller.*;
 
 import org.junit.jupiter.api.Test;
+
+import com.example.demo.controller.UserController;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,17 +13,12 @@ class UserControllerTest {
     @Test
     void profile_returnsGreetingWithPrincipal() {
         String result = controller.profile("testuser");
-
-        assertNotNull(result);
-        assertTrue(result.contains("Profile"));
-        assertTrue(result.contains("Hello, testuser"));
+        assertEquals("Hello, testuser", result);
     }
 
     @Test
     void profile_withNullPrincipal_returnsGreetingWithNull() {
         String result = controller.profile(null);
-
-        assertNotNull(result);
-        assertTrue(result.contains("Hello, null"));
+        assertEquals("Hello, null", result);
     }
 }
