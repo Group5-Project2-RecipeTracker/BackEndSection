@@ -35,6 +35,19 @@ The frontend runs locally and connects to the live deployed API.
 Optional deployment: Vercel or Netlify.
 
 ---
+### Render (Backend)
+
+The Spring Boot API is deployed and hosted on [Render](https://render.com).
+
+**Live API Base URL:** `https://mealtracker-86x4.onrender.com`
+
+#### How It Works
+1. Code is pushed to the dedicated branch on GitHub
+2. Render detects the push and triggers an automatic redeploy
+3. Render builds the Docker image using the project's `Dockerfile`
+4. The container is spun up and the API becomes live at the base URL
+
+---
 
 ## Resources and Relationships
 
