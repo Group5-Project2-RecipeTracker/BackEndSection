@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
 import java.time.Instant;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class HealthController {
 
-    @GetMapping(value = "/health", produces = MediaType.TEXT_HTML_VALUE)
-    public String health() {
-        return "<h2>Status: OK</h2><p>timestamp: " + Instant.now() + "</p>";
+    @GetMapping("/health")
+    public Map<String, Object> health() {
+        return Map.of(
+                "status", "OK",
+                "timestamp", Instant.now().toString()
+        );
     }
 }

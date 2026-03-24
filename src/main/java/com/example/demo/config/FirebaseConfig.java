@@ -20,20 +20,33 @@ public class FirebaseConfig {
     @PostConstruct
     public void initialize() {
         File credFile = new File(credentialsPath);
+
         if (!credFile.exists()) {
-            System.out.println("WARNING: Firebase credentials not found at " + credentialsPath + " — skipping Firebase init.");
+            System.out.println("Firebase credentials NOT found at: " + credentialsPath);
             return;
         }
+
         try {
             InputStream is = new FileInputStream(credFile);
+
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(is))
                     .build();
+
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
+                System.out.println("Firebase initialized");
             }
+
+            // 🔥 TEST FIRESTORE CONNECTION
+            var db = com.google.firebase.cloud.FirestoreClient.getFirestore();
+            var collections = db.listCollections();
+
+            System.out.println("Firestore connected. Collections:");
+            collections.forEach(c -> System.out.println(" - " + c.getId()));
+
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Firebase from: " + credentialsPath, e);
+            throw new RuntimeException("Failed to initialize Firebase: " + credentialsPath, e);
         }
     }
 }

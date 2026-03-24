@@ -1,14 +1,39 @@
 package com.example.demo.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
 
-    @GetMapping(value = "/api/profile", produces = MediaType.TEXT_HTML_VALUE)
-    public String profile(@AuthenticationPrincipal String principal) {
-        return "<h2>Profile</h2><p>Hello, " + principal + "</p>";
+    @GetMapping("/profile")
+    public Map<String, Object> profile(@AuthenticationPrincipal Object principal) {
+        return Map.of(
+                "message", "Current authenticated user profile",
+                "principal", principal == null ? "anonymous" : principal.toString()
+        );
+    }
+
+    @GetMapping("/{userId}")
+    public Map<String, Object> getUser(@PathVariable String userId) {
+        return Map.of(
+                "message", "Get one user",
+                "userId", userId
+        );
+    }
+
+    @PutMapping("/{userId}")
+    public Map<String, Object> updateUser(
+            @PathVariable String userId,
+            @RequestBody Map<String, Object> body
+    ) {
+        return Map.of(
+                "message", "Update user",
+                "userId", userId,
+                "received", body
+        );
     }
 }

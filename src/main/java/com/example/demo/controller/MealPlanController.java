@@ -1,32 +1,69 @@
 package com.example.demo.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/meal-plans")
 public class MealPlanController {
 
-    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
-    public String getMealPlan() {
-        return """
-            <h2>Meal Plan (placeholder)</h2>
-            <ul>
-              <li>Monday: Breakfast, Lunch</li>
-              <li>Tuesday: Dinner</li>
-            </ul>
-        """;
+    @GetMapping
+    public Map<String, Object> listMealPlans(
+            @RequestParam(required = false) String userId
+    ) {
+        return Map.of(
+                "message", "List meal plans from Firestore",
+                "collection", "mealPlans",
+                "userId", userId == null ? "" : userId,
+                "routes", List.of(
+                        "GET /api/meal-plans",
+                        "GET /api/meal-plans/{mealPlanId}",
+                        "POST /api/meal-plans",
+                        "PUT /api/meal-plans/{mealPlanId}",
+                        "DELETE /api/meal-plans/{mealPlanId}"
+                )
+        );
     }
 
-    @PostMapping("/entries")
-    public Map<String, Object> addMealEntry(@RequestBody Map<String, Object> body) {
-        return Map.of("message", "placeholder: add meal entry", "received", body);
+    @GetMapping("/{mealPlanId}")
+    public Map<String, Object> getMealPlan(@PathVariable String mealPlanId) {
+        return Map.of(
+                "message", "Get one meal plan from Firestore",
+                "mealPlanId", mealPlanId,
+                "collection", "mealPlans"
+        );
     }
 
-    @DeleteMapping("/entries/{id}")
-    public Map<String, Object> deleteMealEntry(@PathVariable int id) {
-        return Map.of("message", "placeholder: delete meal entry", "id", id);
+    @PostMapping
+    public Map<String, Object> createMealPlan(@RequestBody Map<String, Object> body) {
+        return Map.of(
+                "message", "Create meal plan in Firestore",
+                "collection", "mealPlans",
+                "received", body
+        );
+    }
+
+    @PutMapping("/{mealPlanId}")
+    public Map<String, Object> updateMealPlan(
+            @PathVariable String mealPlanId,
+            @RequestBody Map<String, Object> body
+    ) {
+        return Map.of(
+                "message", "Update meal plan in Firestore",
+                "mealPlanId", mealPlanId,
+                "collection", "mealPlans",
+                "received", body
+        );
+    }
+
+    @DeleteMapping("/{mealPlanId}")
+    public Map<String, Object> deleteMealPlan(@PathVariable String mealPlanId) {
+        return Map.of(
+                "message", "Delete meal plan from Firestore",
+                "mealPlanId", mealPlanId,
+                "collection", "mealPlans"
+        );
     }
 }
