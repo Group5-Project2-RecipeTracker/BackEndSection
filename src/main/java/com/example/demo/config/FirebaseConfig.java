@@ -38,7 +38,7 @@ public class FirebaseConfig {
                 System.out.println("Firebase initialized");
             }
 
-            // 🔥 TEST FIRESTORE CONNECTION
+            //  TEST FIRESTORE CONNECTION
             var db = com.google.firebase.cloud.FirestoreClient.getFirestore();
             var collections = db.listCollections();
 

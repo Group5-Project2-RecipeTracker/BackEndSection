@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -10,10 +10,11 @@ import java.util.Map;
 public class UserController {
 
     @GetMapping("/profile")
-    public Map<String, Object> profile(@AuthenticationPrincipal Object principal) {
+    public Map<String, Object> profile(Authentication authentication) {
         return Map.of(
                 "message", "Current authenticated user profile",
-                "principal", principal == null ? "anonymous" : principal.toString()
+                "uid", authentication == null ? "anonymous" : String.valueOf(authentication.getPrincipal()),
+                "email", authentication == null || authentication.getDetails() == null ? "" : String.valueOf(authentication.getDetails())
         );
     }
 
