@@ -1,52 +1,38 @@
 package com.example.demo.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
-@Component
+@Configuration
 public class FirebaseConfig {
 
-    @Value("${firebase.credentials.path}")
-    private String credentialsPath;
-
-    @PostConstruct
-    public void initialize() {
-        File credFile = new File(credentialsPath);
-
-        if (!credFile.exists()) {
-            System.out.println("Firebase credentials NOT found at: " + credentialsPath);
-            return;
-        }
-
-        try {
-            InputStream is = new FileInputStream(credFile);
-
-            FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(is))
-                    .build();
+    @Bean
+    public Firestore firestore() {
+        try (InputStream is = new ClassPathResource("firebase-service-account.json").getInputStream()) {
 
             if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseOptions options = FirebaseOptions.builder()
+                        .setCredentials(GoogleCredentials.fromStream(is))
+                        .build();
+
                 FirebaseApp.initializeApp(options);
                 System.out.println("Firebase initialized");
             }
 
-            // 🔥 TEST FIRESTORE CONNECTION
-            var db = com.google.firebase.cloud.FirestoreClient.getFirestore();
-            var collections = db.listCollections();
-
-            System.out.println("Firestore connected. Collections:");
-            collections.forEach(c -> System.out.println(" - " + c.getId()));
+            Firestore db = FirestoreClient.getFirestore();
+            System.out.println("Firestore connected");
+            return db;
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize Firebase: " + credentialsPath, e);
+            throw new RuntimeException("Failed to initialize Firebase from classpath resource", e);
         }
     }
 }

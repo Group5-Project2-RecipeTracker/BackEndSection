@@ -13,7 +13,11 @@ import java.util.List;
 @Service
 public class RecipeService {
 
-    private final Firestore db = FirestoreClient.getFirestore();
+    private final Firestore db;
+    public RecipeService(Firestore db) {
+        this.db = db;
+    }
+
     private static final String COLLECTION = "recipes";
 
     public List<Recipe> getAllRecipes() throws Exception {
