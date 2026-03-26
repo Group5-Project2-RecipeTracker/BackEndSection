@@ -1,32 +1,50 @@
 package com.example.demo.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/favorites")
 public class FavoritesController {
 
-    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
-    public String listFavorites() {
-        return """
-            <h2>Favorites (placeholder)</h2>
-            <ul>
-              <li>1 - Chicken Bowl</li>
-              <li>2 - Oatmeal</li>
-            </ul>
-        """;
+    @GetMapping
+    public Map<String, Object> listFavorites(
+            @RequestParam(required = false) String userId,
+            @RequestParam(required = false) String type
+    ) {
+        return Map.of(
+                "message", "List favorites from Firestore",
+                "collection", "favorites",
+                "filters", Map.of(
+                        "userId", userId == null ? "" : userId,
+                        "type", type == null ? "" : type
+                ),
+                "routes", List.of(
+                        "GET /api/favorites",
+                        "POST /api/favorites",
+                        "DELETE /api/favorites/{favoriteId}"
+                )
+        );
     }
 
-    @PostMapping("/{id}")
-    public Map<String, Object> addFavorite(@PathVariable int id) {
-        return Map.of("message", "placeholder: add favorite", "id", id);
+    @PostMapping
+    public Map<String, Object> addFavorite(@RequestBody Map<String, Object> body) {
+        return Map.of(
+                "message", "Create favorite in Firestore",
+                "collection", "favorites",
+                "received", body,
+                "expectedFields", List.of("userId", "itemId", "type")
+        );
     }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> removeFavorite(@PathVariable int id) {
-        return Map.of("message", "placeholder: remove favorite", "id", id);
+    @DeleteMapping("/{favoriteId}")
+    public Map<String, Object> removeFavorite(@PathVariable String favoriteId) {
+        return Map.of(
+                "message", "Delete favorite from Firestore",
+                "favoriteId", favoriteId,
+                "collection", "favorites"
+        );
     }
 }

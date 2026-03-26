@@ -1,10 +1,6 @@
 # -------------------------
 # Build outputs
 # -------------------------
-# Firebase service accounts
-firebase-service-account.json
-*serviceAccount*.json
-*.firebase.json
 
 # Maven
 target/
@@ -58,10 +54,11 @@ replay_pid*
 # -------------------------
 # Local / machine-specific
 # -------------------------
-# Maven local repo (only if it somehow exists in the project)
+
+# Maven local repo (if present in project)
 .m2/
 
-# Spring Boot local overrides (keep your real application.properties tracked)
+# Spring Boot local overrides
 application.properties.local
 application-local.properties
 application.yml.local
@@ -78,7 +75,7 @@ application-local.yml
 *.tar.gz
 *.rar
 
-# Keep wrapper jars if you use them
+# Keep wrapper jars
 !gradle/wrapper/gradle-wrapper.jar
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -124,13 +121,14 @@ $RECYCLE.BIN/
 # -------------------------
 # Secrets (do NOT commit)
 # -------------------------
+
+# Generic secrets folder
 secret/
 
-# Firebase service account keys (targeted; don't ignore all JSON)
+# Firebase service account keys
+firebase-service-account.json
 **/*serviceAccount*.json
 **/*adminsdk*.json
-**/firebase-service-account.json
-**/meal-tracker-firebase.json
 
-# Explicitly ignore if it lives in resources
+# Explicit path (resources)
 src/main/resources/firebase-service-account.json

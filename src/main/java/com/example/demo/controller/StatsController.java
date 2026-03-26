@@ -1,21 +1,42 @@
 package com.example.demo.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stats")
 public class StatsController {
 
-    @GetMapping(produces = MediaType.TEXT_HTML_VALUE)
-    public String stats() {
-        return """
-            <h2>Stats (placeholder)</h2>
-            <ul>
-              <li>mealsLogged: 15</li>
-              <li>recipesSaved: 8</li>
-              <li>favorites: 5</li>
-            </ul>
-        """;
+    @GetMapping
+    public Map<String, Object> getStats(
+            @RequestParam(required = false) String userId
+    ) {
+        return Map.of(
+                "message", "Return app or user stats from Firestore/aggregations",
+                "userId", userId == null ? "" : userId,
+                "routes", List.of(
+                        "GET /api/stats",
+                        "GET /api/stats/summary",
+                        "GET /api/stats/user/{userId}"
+                )
+        );
+    }
+
+    @GetMapping("/summary")
+    public Map<String, Object> getSummary() {
+        return Map.of(
+                "message", "Get overall summary stats",
+                "sources", List.of("foods", "recipes", "mealPlans", "favorites")
+        );
+    }
+
+    @GetMapping("/user/{userId}")
+    public Map<String, Object> getUserStats(@PathVariable String userId) {
+        return Map.of(
+                "message", "Get stats for one user",
+                "userId", userId
+        );
     }
 }

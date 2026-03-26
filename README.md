@@ -1,7 +1,9 @@
 # Group 5 – Recipe Tracker & Meal Planner API
 
-Repository:
-https://github.com/Group5-Project2-RecipeTracker
+**Repository:** [https://github.com/Group5-Project2-RecipeTracker](https://github.com/Group5-Project2-RecipeTracker)  
+**Live API:** [https://mealtracker-86x4.onrender.com](https://mealtracker-86x4.onrender.com)
+
+---
 
 ## Project Overview
 
@@ -24,13 +26,26 @@ This project includes:
 - Spring Security with OAuth2
 - Swagger for API documentation
 - Firebase authentication integration
-- Backend hosting planned on Heroku
+- Backend hosted on Render
 
 ### Front End
 - React (Web frontend)
 
-The frontend runs locally and connects to the live deployed API.
+The frontend runs locally and connects to the live deployed API.  
 Optional deployment: Vercel or Netlify.
+
+---
+### Render (Backend)
+
+The Spring Boot API is deployed and hosted on [Render](https://render.com).
+
+**Live API Base URL:** `https://mealtracker-86x4.onrender.com`
+
+#### How It Works
+1. Code is pushed to the dedicated branch on GitHub
+2. Render detects the push and triggers an automatic redeploy
+3. Render builds the Docker image using the project's `Dockerfile`
+4. The container is spun up and the API becomes live at the base URL
 
 ---
 
@@ -64,22 +79,77 @@ Optional deployment: Vercel or Netlify.
 
 The API follows RESTful principles:
 
-GET    - Retrieve a resource or collection  
-POST   - Create a new resource  
-PUT    - Replace a resource in full  
-PATCH  - Partially update a resource  
-DELETE - Remove a resource  
+| Method   | Description                       |
+|----------|-----------------------------------|
+| `GET`    | Retrieve a resource or collection |
+| `POST`   | Create a new resource             |
+| `PUT`    | Replace a resource in full        |
+| `PATCH`  | Partially update a resource       |
+| `DELETE` | Remove a resource                 |
 
 Swagger will be used to document, test, and demonstrate API functionality.
+
+**Base URL:** `https://mealtracker-86x4.onrender.com`
+
+### Foods
+```
+GET     /api/foods
+GET     /api/foods/{foodId}
+POST    /api/foods
+PUT     /api/foods/{foodId}
+DELETE  /api/foods/{foodId}
+```
+
+### Recipes
+```
+GET     /api/recipes
+GET     /api/recipes/{recipeId}
+POST    /api/recipes
+PUT     /api/recipes/{recipeId}
+DELETE  /api/recipes/{recipeId}
+```
+
+### Meal Plans
+```
+GET     /api/meal-plans
+GET     /api/meal-plans/{mealPlanId}
+POST    /api/meal-plans
+PUT     /api/meal-plans/{mealPlanId}
+DELETE  /api/meal-plans/{mealPlanId}
+```
+
+### Favorites
+```
+GET     /api/favorites
+POST    /api/favorites
+DELETE  /api/favorites/{favoriteId}
+```
+
+### Stats
+```
+GET     /api/stats
+GET     /api/stats/summary
+GET     /api/stats/user/{userId}
+```
+
+### Users
+```
+GET     /api/users/profile
+GET     /api/users/{userId}
+PUT     /api/users/{userId}
+```
+
+### Health
+```
+GET     /api/health
+```
 
 ---
 
 ## User Stories
 
 ### General Users
-
 As a user, I want to:
-
 - Create an account
 - Login
 - Sign out
@@ -93,9 +163,7 @@ As a user, I want to:
 - Filter recipes based on food preference
 
 ### Admin
-
 As an admin, I want to:
-
 - View all users
 - View a specific user
 - Update a user's status
@@ -108,7 +176,6 @@ As an admin, I want to:
 ---
 
 ## Development Workflow
-
 - Use GitHub Issues to track tasks
 - Create milestones for major features
 - Two approvals are required before merging pull requests
